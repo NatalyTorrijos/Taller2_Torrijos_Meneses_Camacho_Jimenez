@@ -1,8 +1,7 @@
 fileFormatVersion: 2
-guid: 3b317421b67cdb34aae97bdde0626d39
-NativeFormatImporter:
+guid: 7bec0ffdeab68b84686b5eb353ec4215
+DefaultImporter:
   externalObjects: {}
-  mainObjectFileID: 2100000
   userData: 
   assetBundleName: 
   assetBundleVariant: 
@@ -11,5 +10,6 @@ AssetOrigin:
   productId: 321830
   packageName: Free 2D Platformer - Skull Garden Tilesets Asset Pack
   packageVersion: 1.0
-  assetPath: Assets/NovaDevs/2D Platformer - Skull Garden  Tilesets Asset Pack/Architecture/Materials/LampPostBase.mat
+  assetPath: Assets/NovaDevs/2D Platformer - Skull Garden  Tilesets Asset Pack/Scenes/Demo
+    3.unity
   uploadId: 762067
