@@ -10,6 +10,10 @@ public class MoverPlayer : MonoBehaviour
     private bool Grounded;
     private Vector3 initialScale;
 
+    private bool enSuelo;
+    private bool recibiendoDanio;
+
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -67,7 +71,14 @@ public class MoverPlayer : MonoBehaviour
         rb.linearVelocity = new Vector2(horizontal * speed, rb.linearVelocity.y);
     }
 
-    
+    //------------Funciòn Recibir Daño----------
+    public void RecibeDanio { }
+
+
+
+
+
+
 }
 
 
