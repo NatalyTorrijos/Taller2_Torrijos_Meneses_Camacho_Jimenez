@@ -9,12 +9,14 @@ public class GameManager : MonoBehaviour
     // HUD
     private TMP_Text coinText;
     private TMP_Text poisonText;
-    private TMP_Text totalText; // 👈 nuevo para el total en HUD
+    private TMP_Text totalText; 
+    private TMP_Text heartText;
 
     // Datos
     private float globalTime;
     public int scoreCoin;
     public int scorePoison;
+   
 
     void Awake()
     {
@@ -33,7 +35,7 @@ public class GameManager : MonoBehaviour
     {
         if (scene.name == "GameOver")
         {
-            // Si NO quieres mostrar nada en GameOver, aquí no ponemos nada
+           
             Time.timeScale = 0f;
         }
         else
@@ -41,7 +43,8 @@ public class GameManager : MonoBehaviour
             // Escenas normales → HUD
             coinText = GameObject.Find("MonedasCant")?.GetComponent<TextMeshProUGUI>();
             poisonText = GameObject.Find("PocionCant")?.GetComponent<TextMeshProUGUI>();
-            totalText = GameObject.Find("PuntosTCant")?.GetComponent<TextMeshProUGUI>(); // 👈 HUD
+            heartText = GameObject.Find("Vida")?.GetComponent<TextMeshProUGUI>();
+            totalText = GameObject.Find("PuntosTCant")?.GetComponent<TextMeshProUGUI>(); 
 
             UpdateScoreUI();
         }
@@ -64,11 +67,14 @@ public class GameManager : MonoBehaviour
         UpdateScoreUI();
     }
 
+   
+
     private void UpdateScoreUI()
     {
         if (coinText != null) coinText.text = scoreCoin.ToString();
         if (poisonText != null) poisonText.text = scorePoison.ToString();
-        if (totalText != null) totalText.text = (scoreCoin + scorePoison).ToString(); // 👈 actualizar total
+        if (totalText != null) totalText.text = (scoreCoin + scorePoison).ToString(); 
+    
     }
 
     public float GlobalTime
