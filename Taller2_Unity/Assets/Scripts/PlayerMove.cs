@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class MoverPlayer : MonoBehaviour
@@ -47,5 +48,10 @@ public class MoverPlayer : MonoBehaviour
     private void FixedUpdate()
     {
         rb.linearVelocity = new Vector2(horizontal * speed, rb.linearVelocity.y);
+    }
+
+    internal void RecibeDanio(Vector2 direcciondanio, int v)
+    {
+        throw new NotImplementedException();
     }
 }
