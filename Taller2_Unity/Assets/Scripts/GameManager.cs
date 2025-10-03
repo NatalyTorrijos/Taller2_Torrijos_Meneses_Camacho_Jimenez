@@ -4,11 +4,14 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public TMP_Text coinText;
-    public TMP_Text poisonText;
-
     public static GameManager Instance;
 
+    // HUD
+    private TMP_Text coinText;
+    private TMP_Text poisonText;
+    private TMP_Text totalText; // 👈 nuevo para el total en HUD
+
+    // Datos
     private float globalTime;
     public int scoreCoin;
     public int scorePoison;
@@ -23,75 +26,55 @@ public class GameManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
-        //SceneManager.sceneLoaded += OnSceneLoaded;
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
-    //private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    //{
-    //    if (scene.name == "GameOver")
-    //    {
-    //        // Buscar los textos específicos de la escena final
-    //        //TMP_Text finalApple = GameObject.Find("FinalAppleText")?.GetComponent<TextMeshProUGUI>();
-    //        //TMP_Text finalBanana = GameObject.Find("FinalBananaText")?.GetComponent<TextMeshProUGUI>();
-    //        //TMP_Text finalTotal = GameObject.Find("FinalTotalText")?.GetComponent<TextMeshProUGUI>();
-    //        //TMP_Text finalTime = GameObject.Find("FinalTimeText")?.GetComponent<TextMeshProUGUI>();
-
-    //        if (finalApple != null) finalApple.text = scoreCoin.ToString();
-    //        if (finalBanana != null) finalBanana.text = scorePoison.ToString();
-    //        if (finalTotal != null) finalTotal.text = (scoreCoin + scorePoison).ToString();
-    //        if (finalTime != null)
-    //        {
-    //            finalTime.text = Timer.FormatTime(GlobalTime);
-    //        }
-
-    //        Time.timeScale = 0f; // congelar el juego en la escena final
-    //    }
-    //    else
-    //    {
-    //        // Escenas normales → HUD
-    //        coinText = GameObject.Find("CoinText")?.GetComponent<TextMeshProUGUI>();
-    //        poisonText = GameObject.Find("PoisonText")?.GetComponent<TextMeshProUGUI>();
-    //        UpdateScoreUI();
-    //    }
-    //}
-
-    void Start()
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        globalTime = 0;
-        UpdateScoreUI();
-    }
+        if (scene.name == "GameOver")
+        {
+            // Si NO quieres mostrar nada en GameOver, aquí no ponemos nada
+            Time.timeScale = 0f;
+        }
+        else
+        {
+            // Escenas normales → HUD
+            coinText = GameObject.Find("MonedasCant")?.GetComponent<TextMeshProUGUI>();
+            poisonText = GameObject.Find("PocionCant")?.GetComponent<TextMeshProUGUI>();
+            totalText = GameObject.Find("PuntosTCant")?.GetComponent<TextMeshProUGUI>(); // 👈 HUD
 
+            UpdateScoreUI();
+        }
+    }
 
     public void TotalTime(float timeScene)
     {
         globalTime += timeScene;
     }
 
-    public void TotalCoin(int Coin)
+    public void TotalCoin(int coin)
     {
-        scoreCoin += Coin;
+        scoreCoin += coin;
         UpdateScoreUI();
     }
 
-    public void TotalPoison(int Poison)
+    public void TotalPoison(int poison)
     {
-        scorePoison += Poison;
+        scorePoison += poison;
         UpdateScoreUI();
     }
 
     private void UpdateScoreUI()
     {
-        if (coinText != null)
-        {
-            coinText.text = scoreCoin.ToString();
-        }
-
-        if (poisonText != null)
-        {
-            poisonText.text = scorePoison.ToString();
-        }
+        if (coinText != null) coinText.text = scoreCoin.ToString();
+        if (poisonText != null) poisonText.text = scorePoison.ToString();
+        if (totalText != null) totalText.text = (scoreCoin + scorePoison).ToString(); // 👈 actualizar total
     }
 
-    public float GlobalTime { get => globalTime; set => globalTime = value; }
-
+    public float GlobalTime
+    {
+        get => globalTime;
+        set => globalTime = value;
+    }
 }
+
