@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class CollectItem : MonoBehaviour
 {
-    public string nameItem;   // Nombre del ítem (ej: Manzana, Banana)
-    public int itemValue = 1; // Valor en puntos
+    public string nameItem;   
+    public int itemValue = 1; 
 
     public AudioClip itemSound;
     private void OnTriggerEnter2D(Collider2D collision)
@@ -21,17 +21,14 @@ public class CollectItem : MonoBehaviour
             }
             //else if (nameItem == "Heart")
             //{
-            //    GameManager.Instance.TotalHeart(itemValue);
+            //    GameManager.Instance.maxLives(itemValue);
             //}
-            else
-            {
-                Debug.LogWarning("Ítem desconocido: " + nameItem);
-            }
             if (itemSound != null)
             {
                 AudioSource.PlayClipAtPoint(itemSound,transform.position);
 
             }
+
             
 
             Destroy(gameObject);

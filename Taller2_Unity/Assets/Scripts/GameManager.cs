@@ -6,17 +6,16 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    // HUD
+    
     private TMP_Text coinText;
     private TMP_Text poisonText;
     private TMP_Text totalText; 
-    private TMP_Text heartText;
 
-    // Datos
+
+    
     private float globalTime;
     public int scoreCoin;
     public int scorePoison;
-   
 
     void Awake()
     {
@@ -40,10 +39,9 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            // Escenas normales → HUD
+        
             coinText = GameObject.Find("MonedasCant")?.GetComponent<TextMeshProUGUI>();
             poisonText = GameObject.Find("PocionCant")?.GetComponent<TextMeshProUGUI>();
-            heartText = GameObject.Find("Vida")?.GetComponent<TextMeshProUGUI>();
             totalText = GameObject.Find("PuntosTCant")?.GetComponent<TextMeshProUGUI>(); 
 
             UpdateScoreUI();
@@ -67,14 +65,11 @@ public class GameManager : MonoBehaviour
         UpdateScoreUI();
     }
 
-   
-
     private void UpdateScoreUI()
     {
         if (coinText != null) coinText.text = scoreCoin.ToString();
         if (poisonText != null) poisonText.text = scorePoison.ToString();
-        if (totalText != null) totalText.text = (scoreCoin + scorePoison).ToString(); 
-    
+        if (totalText != null) totalText.text = (scoreCoin + scorePoison).ToString();
     }
 
     public float GlobalTime
