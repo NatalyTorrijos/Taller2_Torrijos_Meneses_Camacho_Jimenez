@@ -1,30 +1,21 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
-using System.Collections;
 
 public class LoaderScenes : MonoBehaviour
 {
-    public Image fadeImage;
-    public float fadeSpeed = 1f;
-
-    public void lectorEscena(string nameScene)
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
     {
-        StartCoroutine(FadeAndLoad(nameScene));
+
     }
 
-    IEnumerator FadeAndLoad(string sceneName)
+    // Update is called once per frame
+    void Update()
     {
-        float alpha = 0f;
-        fadeImage.gameObject.SetActive(true);
 
-        while (alpha < 1f)
-        {
-            alpha += Time.deltaTime * fadeSpeed;
-            fadeImage.color = new Color(0, 0, 0, alpha);
-            yield return null;
-        }
-
-        SceneManager.LoadScene(sceneName);
+    }
+    public void lectorEscena(string nameScene)
+    {
+        SceneManager.LoadScene(nameScene);
     }
 }
