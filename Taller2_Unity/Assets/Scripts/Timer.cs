@@ -6,13 +6,7 @@ using TMPro;
 
 public class Timer : MonoBehaviour
 {
-    //#region sonidos
-    //[SerializeField]
-    //private AudioClip stop;
-    //[SerializeField]
-    //private AudioSource respuestaAudio;
-    ////Reloj objReloj;
-    //#endregion
+
 
     public TextMeshProUGUI timerMinutes;
     public TextMeshProUGUI timerSeconds;
@@ -85,4 +79,9 @@ public class Timer : MonoBehaviour
             timerSeconds100.text = (seconds100Int < 10) ? "0" + seconds100Int : seconds100Int.ToString();
         }
     }
+    public float GetCurrentTime()
+    {
+        return timerTime;
+    }
+
 }
