@@ -29,9 +29,13 @@ public class GameManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
-        SceneManager.sceneLoaded += OnSceneLoaded;
 
-        playerLives = 3;
+        if (playerLives <= 0)  // ✅ Solo asigna si aún no se inicializó
+        {
+            playerLives = 3;
+        }
+
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
