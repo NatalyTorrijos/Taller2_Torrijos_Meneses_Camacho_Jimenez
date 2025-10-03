@@ -1,5 +1,9 @@
 fileFormatVersion: 2
-guid: 06abbc95245862f4e9e06984628ef49b
+<<<<<<<< HEAD:Taller2_Unity/Assets/NovaDevs/2D Platformer - Skull Garden  Tilesets Asset Pack/Tile Palette/Bushes and Grass.meta
+guid: 4992b049d9ddd9644bf9ee3169cecb2b
+========
+guid: 9539d72f1731e8a4ea5998a87c4a8099
+>>>>>>>> origin/SAM:Taller2_Unity/Assets/NovaDevs/2D Platformer - Skull Garden  Tilesets Asset Pack/FONDO.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
