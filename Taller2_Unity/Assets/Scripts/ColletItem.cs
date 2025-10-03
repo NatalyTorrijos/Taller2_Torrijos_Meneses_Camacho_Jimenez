@@ -18,7 +18,7 @@ public class CollectItem : MonoBehaviour
             }
             if (itemSound != null)
             {
-                AudioSource.PlayClipAtPoint(itemSound, transform.position);
+                AudioSource.PlayClipAtPoint(itemSound,transform.position);
 
             }
 
