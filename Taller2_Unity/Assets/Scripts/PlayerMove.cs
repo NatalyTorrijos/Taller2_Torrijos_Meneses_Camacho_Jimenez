@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MoverPlayer : MonoBehaviour
 {
@@ -14,15 +15,31 @@ public class MoverPlayer : MonoBehaviour
     private int jumpCount;
     public int maxJumps = 2;
 
+    private AudioSource audioSource;
+    public AudioClip walkSound;
+    public AudioClip jumpSound;
+    public AudioClip fallSound;
+    public AudioClip[] attackSounds;
+    public AudioClip deathSound;
+
+    public GameObject gameOverCanvas;
+
+    private bool isDead;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         initialScale = transform.localScale;
+        audioSource = GetComponent<AudioSource>();
+        if (gameOverCanvas != null) gameOverCanvas.SetActive(false);
+        isDead = false;
     }
 
     void Update()
     {
+        if (isDead) return;
+
         horizontal = Input.GetAxisRaw("Horizontal");
 
         if (horizontal < 0.0f)
@@ -43,6 +60,7 @@ public class MoverPlayer : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             animator.SetTrigger("attack");
+            if (attackSounds.Length > 0) PlayRandomSound(attackSounds);
         }
 
         if (!isGrounded)
@@ -56,6 +74,7 @@ public class MoverPlayer : MonoBehaviour
             {
                 animator.SetBool("jumping", false);
                 animator.SetBool("falling", true);
+                PlaySound(fallSound);
             }
         }
         else
@@ -69,11 +88,14 @@ public class MoverPlayer : MonoBehaviour
     {
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f);
         rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+        PlaySound(jumpSound);
     }
 
     private void FixedUpdate()
     {
+        if (isDead) return;
         rb.linearVelocity = new Vector2(horizontal * speed, rb.linearVelocity.y);
+        if (horizontal != 0 && isGrounded) PlaySound(walkSound);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -92,8 +114,42 @@ public class MoverPlayer : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Obstacle") && !isDead)
+        {
+            isDead = true;
+            PlaySound(deathSound);
+            if (gameOverCanvas != null) gameOverCanvas.SetActive(true);
+            rb.linearVelocity = Vector2.zero;
+            this.enabled = false;
+        }
+    }
+
+    private void PlaySound(AudioClip clip)
+    {
+        if (clip != null && !audioSource.isPlaying)
+        {
+            audioSource.PlayOneShot(clip);
+        }
+    }
+
+    private void PlayRandomSound(AudioClip[] clips)
+    {
+        if (clips.Length > 0)
+        {
+            int index = UnityEngine.Random.Range(0, clips.Length);
+            audioSource.PlayOneShot(clips[index]);
+        }
+    }
+
     internal void RecibeDanio(Vector2 direcciondanio, int v)
     {
         throw new NotImplementedException();
+    }
+
+    public void Retry()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
