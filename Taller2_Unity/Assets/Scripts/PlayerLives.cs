@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerLives : MonoBehaviour
 {
-    // Este script NO guarda las vidas, solo trabaja con las del GameManager
+
 
     public void SumarVida(int cantidad)
     {
