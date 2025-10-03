@@ -38,4 +38,19 @@ public class EnemyController : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, detectionRadius);
     }
+    private void OnCollisionEnter2D(Collision2D collision) 
+    {
+        if (collision.gameObject.CompareTag("Player")) 
+        {
+            Vector2 direcciondanio = new Vector2(transform.position.x, 0);
+
+            collision.gameObject.GetComponent<MoverPlayer>().RecibeDanio(direcciondanio, 1);
+        
+        
+        }
+
+    
+    }
+
 }
+
