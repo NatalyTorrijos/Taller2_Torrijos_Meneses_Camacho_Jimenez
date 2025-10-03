@@ -55,6 +55,7 @@ public class MoverPlayer : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             animator.SetTrigger("attack");
+            animator.SetBool("recibeDanio", recibiendoDanio);
            
         }
 
@@ -72,7 +73,22 @@ public class MoverPlayer : MonoBehaviour
     }
 
     //------------Funciòn Recibir Daño----------
-    public void RecibeDanio { }
+    public void RecibeDanio (Vector2 direccion, int cantDanio)
+    {
+        if(!recibiendoDanio)
+        {
+            recibiendoDanio = true;
+            Vector2 rebote = new Vector2(transform.position.x - direccion.x, 1).normalized;
+            rb.AddForce(rebote, ForceMode2D.Impulse);
+        }
+    }
+
+    public void DesactivaDanio() 
+    {
+        recibiendoDanio = false;
+    
+ 
+    }
 
 
 
