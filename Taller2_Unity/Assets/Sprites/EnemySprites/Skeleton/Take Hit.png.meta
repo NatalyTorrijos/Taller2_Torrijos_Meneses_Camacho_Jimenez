@@ -1,26 +1,26 @@
 fileFormatVersion: 2
-guid: 5f3849e414a15ef4bafea810f38d8e35
+guid: f7fb89b82e205ea4ba8a88cee4d3070b
 AssetOrigin:
   serializedVersion: 1
-  productId: 170422
-  packageName: Martial Hero
+  productId: 167949
+  packageName: Monsters_Creatures_Fantasy
   packageVersion: 1.0
-  assetPath: Assets/Martial Hero/Sprites/Take Hit - white silhouette.png
-  uploadId: 372436
+  assetPath: Assets/Monsters Creatures Fantasy/Sprites/Skeleton/Take Hit.png
+  uploadId: 365724
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8008791250619013794
-    second: Take Hit - white silhouette_0
+      213: -7500690451134026123
+    second: Take Hit_0
   - first:
-      213: 3891156215361153934
-    second: Take Hit - white silhouette_1
+      213: -889859373511162655
+    second: Take Hit_1
   - first:
-      213: -7146689698409757683
-    second: Take Hit - white silhouette_2
+      213: -3088938797480143695
+    second: Take Hit_2
   - first:
-      213: 8523606802079886837
-    second: Take Hit - white silhouette_3
+      213: -9206091644520726168
+    second: Take Hit_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -155,13 +155,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Take Hit - white silhouette_0
+      name: Take Hit_0
       rect:
         serializedVersion: 2
-        x: 76
-        y: 78
-        width: 37
-        height: 52
+        x: 0
+        y: 0
+        width: 150
+        height: 150
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -170,20 +170,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8f375b3c8e3935446bdafe30bf2b471f
-      internalID: -8008791250619013794
+      spriteID: 907caeaa72bb63b4889cbdea322b1806
+      internalID: -7500690451134026123
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Take Hit - white silhouette_1
+      name: Take Hit_1
       rect:
         serializedVersion: 2
-        x: 266
-        y: 78
-        width: 48
-        height: 54
+        x: 150
+        y: 0
+        width: 150
+        height: 150
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -192,20 +192,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3e6c80d7ec5972a45b36324f41958bd4
-      internalID: 3891156215361153934
+      spriteID: 3521b474b4771d248bafd64b5e250ddc
+      internalID: -889859373511162655
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Take Hit - white silhouette_2
+      name: Take Hit_2
       rect:
         serializedVersion: 2
-        x: 470
-        y: 78
-        width: 42
-        height: 53
+        x: 300
+        y: 0
+        width: 150
+        height: 150
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -214,20 +214,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c6501f96f8e096b45a62de19816877a8
-      internalID: -7146689698409757683
+      spriteID: 3ddcad1e14386394caa85bbbfe25f5c7
+      internalID: -3088938797480143695
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Take Hit - white silhouette_3
+      name: Take Hit_3
       rect:
         serializedVersion: 2
-        x: 670
-        y: 78
-        width: 42
-        height: 53
+        x: 450
+        y: 0
+        width: 150
+        height: 150
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -236,8 +236,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a5a9885cb3babf646828f45f1828a230
-      internalID: 8523606802079886837
+      spriteID: 4105aa489403ac6428c0ada73042563f
+      internalID: -9206091644520726168
       vertices: []
       indices: 
       edges: []
@@ -256,10 +256,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Take Hit - white silhouette_0: -8008791250619013794
-      Take Hit - white silhouette_1: 3891156215361153934
-      Take Hit - white silhouette_2: -7146689698409757683
-      Take Hit - white silhouette_3: 8523606802079886837
+      Take Hit_0: -7500690451134026123
+      Take Hit_1: -889859373511162655
+      Take Hit_2: -3088938797480143695
+      Take Hit_3: -9206091644520726168
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
