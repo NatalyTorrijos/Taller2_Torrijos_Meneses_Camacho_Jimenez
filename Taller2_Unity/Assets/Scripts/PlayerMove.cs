@@ -15,6 +15,8 @@ public class MoverPlayer : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         initialScale = transform.localScale;
+
+        
     }
 
     void Update()
@@ -24,6 +26,8 @@ public class MoverPlayer : MonoBehaviour
             transform.localScale = new Vector3(-initialScale.x, initialScale.y, initialScale.z);
         else if (horizontal > 0.0f)
             transform.localScale = new Vector3(initialScale.x, initialScale.y, initialScale.z);
+
+       
 
         animator.SetBool("running", horizontal != 0.0f);
         Debug.DrawRay(transform.position, Vector3.down * 2f, Color.red);
@@ -43,6 +47,16 @@ public class MoverPlayer : MonoBehaviour
         {
             Jump();
         }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            animator.SetTrigger("attack");
+           
+        }
+
+        
+
+
     }
     private void Jump()
     {
@@ -52,6 +66,8 @@ public class MoverPlayer : MonoBehaviour
     {
         rb.linearVelocity = new Vector2(horizontal * speed, rb.linearVelocity.y);
     }
+
+    
 }
 
 
