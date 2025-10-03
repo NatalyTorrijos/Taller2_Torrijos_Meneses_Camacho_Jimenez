@@ -3,7 +3,7 @@ using UnityEngine;
 public class CollectItem : MonoBehaviour
 {
     public string nameItem;   
-    public int itemValue = 1;
+    public int itemValue;
   
 
 
@@ -13,7 +13,7 @@ public class CollectItem : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            Debug.Log("El jugador recogió: " + nameItem + " (+" + itemValue + ")");
+     
 
             if (nameItem == "Poison")
             {

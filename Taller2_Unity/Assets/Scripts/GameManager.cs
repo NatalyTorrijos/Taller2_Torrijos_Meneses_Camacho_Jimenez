@@ -10,12 +10,12 @@ public class GameManager : MonoBehaviour
     private TMP_Text coinText;
     private TMP_Text poisonText;
     private TMP_Text totalText;
-    private TMP_Text livesText;   
+    private TMP_Text livesText;
 
     // Datos
     private float globalTime;
     public int scoreCoin;
-    public int scorePoison ;
+    public int scorePoison;
     public int playerLives;
 
 
@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         SceneManager.sceneLoaded += OnSceneLoaded;
 
-        playerLives = 3; 
+        playerLives = 3;
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -46,7 +46,6 @@ public class GameManager : MonoBehaviour
             poisonText = GameObject.Find("PocionCant")?.GetComponent<TextMeshProUGUI>();
             totalText = GameObject.Find("PuntosTCant")?.GetComponent<TextMeshProUGUI>();
             livesText = GameObject.Find("Vida")?.GetComponent<TextMeshProUGUI>();
-
 
             UpdateScoreUI();
         }
@@ -68,15 +67,12 @@ public class GameManager : MonoBehaviour
         scorePoison += poison;
         UpdateScoreUI();
     }
+
     public void AddLives(int lives)
     {
         playerLives += lives;
         UpdateScoreUI();
-
     }
-
-
-
 
     private void UpdateScoreUI()
     {
@@ -84,8 +80,6 @@ public class GameManager : MonoBehaviour
         if (poisonText != null) poisonText.text = scorePoison.ToString();
         if (totalText != null) totalText.text = (scoreCoin + scorePoison).ToString();
         if (livesText != null) livesText.text = playerLives.ToString();
-
-
     }
 
     public float GlobalTime
