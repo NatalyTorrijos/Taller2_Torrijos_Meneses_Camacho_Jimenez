@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,13 +6,13 @@ using TMPro;
 
 public class Timer : MonoBehaviour
 {
-    // #region sonidos
-    // [SerializeField]
-    // private AudioClip stop;
-    // [SerializeField]
-    // private AudioSource respuestaAudio;
-    // //Reloj objReloj;
-    // #endregion
+    //#region sonidos
+    //[SerializeField]
+    //private AudioClip stop;
+    //[SerializeField]
+    //private AudioSource respuestaAudio;
+    ////Reloj objReloj;
+    //#endregion
 
     public TextMeshProUGUI timerMinutes;
     public TextMeshProUGUI timerSeconds;
@@ -26,12 +26,11 @@ public class Timer : MonoBehaviour
     public float StartTime { get => startTime; set => startTime = value; }
     public float StopTime { get => stopTime; set => stopTime = value; }
     public float TimerTime { get => timerTime; set => timerTime = value; }
-    public bool IsRunning { get => isRunning; set => isRunning = value; }
 
     // Use this for initialization
     void Start()
     {
-        TimerReset();
+        //TimerReset();
         TimerStart();
     }
 
@@ -54,11 +53,11 @@ public class Timer : MonoBehaviour
             stopTime = timerTime;
             Debug.Log(stopTime.ToString());
             ///
-            // if (stopTime >= 30)
-            // {
-            //     respuestaAudio.clip = stop;
-            //     respuestaAudio.Play();
-            // }
+                //if (stopTime >= 30)
+                //{
+                //    //respuestaAudio.clip = stop;
+                //    //respuestaAudio.Play();
+                //}
 
         }
     }
@@ -75,27 +74,15 @@ public class Timer : MonoBehaviour
     void Update()
     {
         timerTime = stopTime + (Time.time - startTime);
+        int minutesInt = (int)timerTime / 60;
+        int secondsInt = (int)timerTime % 60;
+        int seconds100Int = (int)(Mathf.Floor((timerTime - (secondsInt + minutesInt * 60)) * 100));
 
         if (isRunning)
         {
-            string formatted = FormatTime(timerTime);
-            string[] parts = formatted.Split(':');
-            timerMinutes.text = parts[0];
-            timerSeconds.text = parts[1];
-            timerSeconds100.text = parts[2];
+            timerMinutes.text = (minutesInt < 10) ? "0" + minutesInt : minutesInt.ToString();
+            timerSeconds.text = (secondsInt < 10) ? "0" + secondsInt : secondsInt.ToString();
+            timerSeconds100.text = (seconds100Int < 10) ? "0" + seconds100Int : seconds100Int.ToString();
         }
-    }
-
- 
-    public static string FormatTime(float t)
-    {
-        int minutesInt = (int)t / 60;
-        int secondsInt = (int)t % 60;
-        int seconds100Int = (int)((t - (minutesInt * 60 + secondsInt)) * 100);
-
-        return
-            (minutesInt < 10 ? "0" + minutesInt : minutesInt.ToString()) + ":" +
-            (secondsInt < 10 ? "0" + secondsInt : secondsInt.ToString()) + ":" +
-            (seconds100Int < 10 ? "0" + seconds100Int : seconds100Int.ToString());
     }
 }
