@@ -19,6 +19,14 @@ public class CollectItem : MonoBehaviour
             {
                 GameManager.Instance.TotalCoin(itemValue);
             }
+            //else if (nameItem == "Heart")
+            //{
+            //    GameManager.Instance.TotalHeart(itemValue);
+            //}
+            else
+            {
+                Debug.LogWarning("Ítem desconocido: " + nameItem);
+            }
             if (itemSound != null)
             {
                 AudioSource.PlayClipAtPoint(itemSound,transform.position);
