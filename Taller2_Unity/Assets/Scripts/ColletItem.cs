@@ -12,16 +12,19 @@ public class CollectItem : MonoBehaviour
         {
             Debug.Log("El jugador recogió: " + nameItem + " (+" + itemValue + ")");
 
-            if (nameItem == "Hearts")
+            if (nameItem == "Poison")
             {
-                //GameManager.Instance.Totalhearts(itemValue);
+                GameManager.Instance.TotalPoison(itemValue);
+            }else if (nameItem == "Coin")
+            {
+                GameManager.Instance.TotalCoin(itemValue);
             }
             if (itemSound != null)
             {
-                AudioSource.PlayClipAtPoint(itemSound, transform.position);
+                AudioSource.PlayClipAtPoint(itemSound,transform.position);
 
             }
-
+            
 
             Destroy(gameObject);
         }
