@@ -32,10 +32,10 @@ public class EnemyController : MonoBehaviour
 
         rb.MovePosition(rb.position + movement * speed * Time.deltaTime);
 
-
-
-
-
-
+    }
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, detectionRadius);
     }
 }
