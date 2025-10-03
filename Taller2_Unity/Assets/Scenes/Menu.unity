@@ -442,6 +442,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scoreCoin: 0
   scorePoison: 0
+  playerLives: 0
 --- !u!4 &693951472
 Transform:
   m_ObjectHideFlags: 0

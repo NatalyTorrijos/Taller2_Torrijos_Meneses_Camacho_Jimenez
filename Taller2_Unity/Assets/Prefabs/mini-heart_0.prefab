@@ -102,7 +102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ed3ce9ffedf08c47992eabc323ebef5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nameItem: hearts
+  nameItem: Heart
   itemValue: 1
   itemSound: {fileID: 8300000, guid: 11795c567df3d094f8ce28506dc33526, type: 3}
 --- !u!50 &5210837470029554109

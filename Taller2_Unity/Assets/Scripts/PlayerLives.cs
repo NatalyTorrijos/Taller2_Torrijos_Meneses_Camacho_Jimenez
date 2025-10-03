@@ -1,21 +1,22 @@
-using TMPro;
 using UnityEngine;
 
 public class PlayerLives : MonoBehaviour
 {
-    public int maxLives = 3;      
-    public int currentLives;      
-    public TMP_Text livesText;    
+    // Este script NO guarda las vidas, solo trabaja con las del GameManager
 
-    void Start()
+    public void SumarVida(int cantidad)
     {
-        currentLives = maxLives;
-        UpdateLivesUI();
+        GameManager.Instance.AddLives(cantidad);
     }
 
-    void UpdateLivesUI()
+    public void RestarVida(int cantidad)
     {
-        if (livesText != null)
-            livesText.text = currentLives.ToString();
+        GameManager.Instance.AddLives(-cantidad);
+
+        if (GameManager.Instance.playerLives <= 0)
+        {
+            Debug.Log("El jugador ha muerto");
+            // Aquí puedes agregar animación de muerte, cargar escena GameOver, etc.
+        }
     }
 }

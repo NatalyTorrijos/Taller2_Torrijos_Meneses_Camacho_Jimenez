@@ -6,17 +6,18 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    // HUD
+    // UI
     private TMP_Text coinText;
     private TMP_Text poisonText;
-    private TMP_Text totalText; 
-    private TMP_Text heartText;
+    private TMP_Text totalText;
+    private TMP_Text livesText;   
 
     // Datos
     private float globalTime;
     public int scoreCoin;
-    public int scorePoison;
-   
+    public int scorePoison ;
+    public int playerLives;
+
 
     void Awake()
     {
@@ -29,22 +30,23 @@ public class GameManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
         SceneManager.sceneLoaded += OnSceneLoaded;
+
+        playerLives = 3; 
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (scene.name == "GameOver")
         {
-           
             Time.timeScale = 0f;
         }
         else
         {
-            // Escenas normales → HUD
             coinText = GameObject.Find("MonedasCant")?.GetComponent<TextMeshProUGUI>();
             poisonText = GameObject.Find("PocionCant")?.GetComponent<TextMeshProUGUI>();
-            heartText = GameObject.Find("Vida")?.GetComponent<TextMeshProUGUI>();
-            totalText = GameObject.Find("PuntosTCant")?.GetComponent<TextMeshProUGUI>(); 
+            totalText = GameObject.Find("PuntosTCant")?.GetComponent<TextMeshProUGUI>();
+            livesText = GameObject.Find("Vida")?.GetComponent<TextMeshProUGUI>();
+
 
             UpdateScoreUI();
         }
@@ -66,15 +68,24 @@ public class GameManager : MonoBehaviour
         scorePoison += poison;
         UpdateScoreUI();
     }
+    public void AddLives(int lives)
+    {
+        playerLives += lives;
+        UpdateScoreUI();
 
-   
+    }
+
+
+
 
     private void UpdateScoreUI()
     {
         if (coinText != null) coinText.text = scoreCoin.ToString();
         if (poisonText != null) poisonText.text = scorePoison.ToString();
-        if (totalText != null) totalText.text = (scoreCoin + scorePoison).ToString(); 
-    
+        if (totalText != null) totalText.text = (scoreCoin + scorePoison).ToString();
+        if (livesText != null) livesText.text = playerLives.ToString();
+
+
     }
 
     public float GlobalTime
@@ -83,4 +94,3 @@ public class GameManager : MonoBehaviour
         set => globalTime = value;
     }
 }
-
