@@ -201,7 +201,7 @@ public class MoverPlayer : MonoBehaviour
     public void Retry()
     {
         //---------se reinicia la vida al morir
-        GameManager.Instance.playerLives = 2;
+        GameManager.Instance.playerLives = 4;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
