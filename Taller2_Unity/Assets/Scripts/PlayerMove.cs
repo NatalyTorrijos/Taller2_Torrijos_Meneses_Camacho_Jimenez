@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,6 +10,9 @@ public class MoverPlayer : MonoBehaviour
     public float speed;
     public float jumpForce;
     private Vector3 initialScale;
+
+    private bool recibiendoDanio;
+    public float fuerzaRebote = 15f;
 
     private bool isGrounded;
     private int jumpCount;
@@ -23,6 +26,7 @@ public class MoverPlayer : MonoBehaviour
     public AudioClip deathSound;
 
     public GameObject gameOverCanvas;
+    public GameObject espada;
 
     private bool isDead;
 
@@ -34,6 +38,9 @@ public class MoverPlayer : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         if (gameOverCanvas != null) gameOverCanvas.SetActive(false);
         isDead = false;
+
+        if (espada != null)
+            espada.SetActive(false);
     }
 
     void Update()
@@ -61,6 +68,7 @@ public class MoverPlayer : MonoBehaviour
         {
             animator.SetTrigger("attack");
             if (attackSounds.Length > 0) PlayRandomSound(attackSounds);
+            ActivarEspadaTemporal();
         }
 
         if (!isGrounded)
@@ -82,6 +90,28 @@ public class MoverPlayer : MonoBehaviour
             animator.SetBool("jumping", false);
             animator.SetBool("falling", false);
         }
+
+        animator.SetBool("recibeDanio", recibiendoDanio);
+    }
+
+    public void RecibeDanio(Vector2 posicionEnemigo, int cantDanio)
+    {
+        if (!recibiendoDanio)
+        {
+            recibiendoDanio = true;
+            Vector2 direccion = ((Vector2)transform.position - posicionEnemigo).normalized + Vector2.up * 0.5f;
+            rb.linearVelocity = Vector2.zero;
+            rb.AddForce(direccion * fuerzaRebote, ForceMode2D.Impulse);
+            animator.SetTrigger("recibeDanio");
+
+            
+            Invoke("DesactivaDanio", 0.4f);
+        }
+    }
+
+    public void DesactivaDanio()
+    {
+        recibiendoDanio = false;
     }
 
     private void Jump()
@@ -101,17 +131,13 @@ public class MoverPlayer : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Platform"))
-        {
             isGrounded = true;
-        }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Platform"))
-        {
             isGrounded = false;
-        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -129,9 +155,7 @@ public class MoverPlayer : MonoBehaviour
     private void PlaySound(AudioClip clip)
     {
         if (clip != null && !audioSource.isPlaying)
-        {
             audioSource.PlayOneShot(clip);
-        }
     }
 
     private void PlayRandomSound(AudioClip[] clips)
@@ -143,13 +167,23 @@ public class MoverPlayer : MonoBehaviour
         }
     }
 
-    internal void RecibeDanio(Vector2 direcciondanio, int v)
-    {
-        throw new NotImplementedException();
-    }
-
     public void Retry()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    private void ActivarEspadaTemporal()
+    {
+        if (espada != null)
+        {
+            espada.SetActive(true);
+            Invoke("DesactivarEspada", 0.2f);
+        }
+    }
+
+    public void DesactivarEspada()
+    {
+        if (espada != null)
+            espada.SetActive(false);
     }
 }

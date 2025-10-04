@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Platform
   - Obstacle
+  - Espada
   layers:
   - Default
   - TransparentFX

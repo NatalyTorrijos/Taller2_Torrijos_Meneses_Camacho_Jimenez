@@ -210,7 +210,10 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      DJANDJAD_0: -2251350096153219700
+      DJANDJAD_1: 561122395349405996
+      DJANDJAD_2: 2223960203512513359
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
