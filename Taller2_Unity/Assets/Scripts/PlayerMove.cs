@@ -24,11 +24,18 @@ public class MoverPlayer : MonoBehaviour
     public AudioClip fallSound;
     public AudioClip[] attackSounds;
     public AudioClip deathSound;
+    public AudioClip hurtSound;
 
     public GameObject gameOverCanvas;
     public GameObject espada;
 
     private bool isDead;
+
+    private float walkSoundTimer;
+    public float walkSoundCooldown = 0.4f;
+
+    private float fallSoundTimer;
+    public float fallSoundCooldown = 0.6f;
 
     void Start()
     {
@@ -38,9 +45,7 @@ public class MoverPlayer : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         if (gameOverCanvas != null) gameOverCanvas.SetActive(false);
         isDead = false;
-
-        if (espada != null)
-            espada.SetActive(false);
+        if (espada != null) espada.SetActive(false);
     }
 
     void Update()
@@ -82,13 +87,20 @@ public class MoverPlayer : MonoBehaviour
             {
                 animator.SetBool("jumping", false);
                 animator.SetBool("falling", true);
-                PlaySound(fallSound);
+
+                fallSoundTimer -= Time.deltaTime;
+                if (fallSoundTimer <= 0f)
+                {
+                    PlaySound(fallSound);
+                    fallSoundTimer = fallSoundCooldown;
+                }
             }
         }
         else
         {
             animator.SetBool("jumping", false);
             animator.SetBool("falling", false);
+            fallSoundTimer = 0f;
         }
 
         animator.SetBool("recibeDanio", recibiendoDanio);
@@ -103,8 +115,7 @@ public class MoverPlayer : MonoBehaviour
             rb.linearVelocity = Vector2.zero;
             rb.AddForce(direccion * fuerzaRebote, ForceMode2D.Impulse);
             animator.SetTrigger("recibeDanio");
-
-            
+            PlaySound(hurtSound);
             Invoke("DesactivaDanio", 0.4f);
         }
     }
@@ -125,7 +136,20 @@ public class MoverPlayer : MonoBehaviour
     {
         if (isDead) return;
         rb.linearVelocity = new Vector2(horizontal * speed, rb.linearVelocity.y);
-        if (horizontal != 0 && isGrounded) PlaySound(walkSound);
+
+        if (horizontal != 0 && isGrounded)
+        {
+            walkSoundTimer -= Time.deltaTime;
+            if (walkSoundTimer <= 0f)
+            {
+                PlaySound(walkSound);
+                walkSoundTimer = walkSoundCooldown;
+            }
+        }
+        else
+        {
+            walkSoundTimer = 0f;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -154,7 +178,7 @@ public class MoverPlayer : MonoBehaviour
 
     private void PlaySound(AudioClip clip)
     {
-        if (clip != null && !audioSource.isPlaying)
+        if (clip != null)
             audioSource.PlayOneShot(clip);
     }
 
