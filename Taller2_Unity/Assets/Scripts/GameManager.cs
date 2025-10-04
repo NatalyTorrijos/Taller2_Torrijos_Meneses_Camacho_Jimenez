@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
         // Inicializar vidas del jugador en 2
         if (playerLives <= 0)
         {
-            playerLives = 2;
+            playerLives = 4;
         }
 
         SceneManager.sceneLoaded += OnSceneLoaded;
