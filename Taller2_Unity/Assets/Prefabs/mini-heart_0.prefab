@@ -104,7 +104,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameItem: Heart
   itemValue: 1
-  itemSound: {fileID: 8300000, guid: 11795c567df3d094f8ce28506dc33526, type: 3}
+  itemSound: {fileID: 8300000, guid: b9d8588c634744644885e97f3eb88723, type: 3}
 --- !u!50 &5210837470029554109
 Rigidbody2D:
   serializedVersion: 5

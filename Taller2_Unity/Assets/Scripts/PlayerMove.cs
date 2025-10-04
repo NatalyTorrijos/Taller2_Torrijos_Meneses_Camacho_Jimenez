@@ -24,7 +24,6 @@ public class MoverPlayer : MonoBehaviour
     public AudioClip fallSound;
     public AudioClip[] attackSounds;
     public AudioClip deathSound;
-    public AudioClip hurtSound;
 
     public GameObject gameOverCanvas;
     public GameObject espada;
@@ -100,13 +99,19 @@ public class MoverPlayer : MonoBehaviour
         if (!recibiendoDanio && !isDead)
         {
             recibiendoDanio = true;
+
+            
             GameManager.Instance.AddLives(-cantDanio);
+
+            
             Vector2 direccion = ((Vector2)transform.position - posicionEnemigo).normalized + Vector2.up * 0.5f;
             rb.linearVelocity = Vector2.zero;
             rb.AddForce(direccion * fuerzaRebote, ForceMode2D.Impulse);
-            animator.SetTrigger("recibeDanio");
-            PlaySound(hurtSound);
 
+            
+            animator.SetTrigger("recibeDanio");
+
+            
             if (GameManager.Instance.playerLives <= 0)
             {
                 Morir();
@@ -121,13 +126,21 @@ public class MoverPlayer : MonoBehaviour
     private void Morir()
     {
         isDead = true;
+
+        
         animator.SetTrigger("death");
+
+        
         rb.linearVelocity = Vector2.zero;
 
+        
         if (gameOverCanvas != null)
             gameOverCanvas.SetActive(true);
 
+        
         this.enabled = false;
+
+        
         PlaySound(deathSound);
     }
 
@@ -187,7 +200,8 @@ public class MoverPlayer : MonoBehaviour
 
     public void Retry()
     {
-        GameManager.Instance.playerLives = 2;
+        //---------se reinicia la vida al morir
+        GameManager.Instance.playerLives = 4;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
