@@ -100,7 +100,7 @@ public class EnemyController : MonoBehaviour
         recibiendoDanio = true;
         animator.SetTrigger("hit_enemy");
 
-        //Empuje espadita
+        //----Empuje espadita
         Vector2 knockback = new Vector2(direccion.x * fuerzaRebote, alturaRebote);
         rb.linearVelocity = Vector2.zero;
         rb.AddForce(knockback, ForceMode2D.Impulse);

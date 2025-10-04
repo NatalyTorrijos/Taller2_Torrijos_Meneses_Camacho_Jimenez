@@ -6,13 +6,13 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    // UI
+    
     private TMP_Text coinText;
     private TMP_Text poisonText;
     private TMP_Text totalText;
     private TMP_Text livesText;
 
-    // Datos
+    
     private float globalTime;
     public int scoreCoin;
     public int scorePoison;
@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        // Inicializar vidas del jugador en 2
+        
         if (playerLives <= 0)
         {
             playerLives = 4;

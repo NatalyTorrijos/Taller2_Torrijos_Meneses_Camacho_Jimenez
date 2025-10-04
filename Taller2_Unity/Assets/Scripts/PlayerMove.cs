@@ -100,25 +100,24 @@ public class MoverPlayer : MonoBehaviour
         {
             recibiendoDanio = true;
 
-            // Restar vida al jugador
+            
             GameManager.Instance.AddLives(-cantDanio);
 
-            // Retroceso
+            
             Vector2 direccion = ((Vector2)transform.position - posicionEnemigo).normalized + Vector2.up * 0.5f;
             rb.linearVelocity = Vector2.zero;
             rb.AddForce(direccion * fuerzaRebote, ForceMode2D.Impulse);
 
-            // Animación de recibir daño
+            
             animator.SetTrigger("recibeDanio");
 
-            // Verificar si las vidas llegaron a 0
+            
             if (GameManager.Instance.playerLives <= 0)
             {
                 Morir();
             }
             else
             {
-                // Desactivar daño temporalmente
                 Invoke("DesactivaDanio", 0.4f);
             }
         }
@@ -128,20 +127,20 @@ public class MoverPlayer : MonoBehaviour
     {
         isDead = true;
 
-        // Activar animación de muerte (Trigger)
+        
         animator.SetTrigger("death");
 
-        // Detener movimiento
+        
         rb.linearVelocity = Vector2.zero;
 
-        // Mostrar pantalla de Game Over
+        
         if (gameOverCanvas != null)
             gameOverCanvas.SetActive(true);
 
-        // Desactivar control del jugador
+        
         this.enabled = false;
 
-        // Reproducir sonido de muerte
+        
         PlaySound(deathSound);
     }
 
@@ -201,6 +200,8 @@ public class MoverPlayer : MonoBehaviour
 
     public void Retry()
     {
+        //---------se reinicia la vida al morir
+        GameManager.Instance.playerLives = 2;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
