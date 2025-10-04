@@ -96,17 +96,53 @@ public class MoverPlayer : MonoBehaviour
 
     public void RecibeDanio(Vector2 posicionEnemigo, int cantDanio)
     {
-        if (!recibiendoDanio)
+        if (!recibiendoDanio && !isDead)
         {
             recibiendoDanio = true;
+
+            // Restar vida al jugador
+            GameManager.Instance.AddLives(-cantDanio);
+
+            // Retroceso
             Vector2 direccion = ((Vector2)transform.position - posicionEnemigo).normalized + Vector2.up * 0.5f;
             rb.linearVelocity = Vector2.zero;
             rb.AddForce(direccion * fuerzaRebote, ForceMode2D.Impulse);
+
+            // Animación de recibir daño
             animator.SetTrigger("recibeDanio");
 
-            
-            Invoke("DesactivaDanio", 0.4f);
+            // Verificar si las vidas llegaron a 0
+            if (GameManager.Instance.playerLives <= 0)
+            {
+                Morir();
+            }
+            else
+            {
+                // Desactivar daño temporalmente
+                Invoke("DesactivaDanio", 0.4f);
+            }
         }
+    }
+
+    private void Morir()
+    {
+        isDead = true;
+
+        // Activar animación de muerte (Trigger)
+        animator.SetTrigger("death");
+
+        // Detener movimiento
+        rb.linearVelocity = Vector2.zero;
+
+        // Mostrar pantalla de Game Over
+        if (gameOverCanvas != null)
+            gameOverCanvas.SetActive(true);
+
+        // Desactivar control del jugador
+        this.enabled = false;
+
+        // Reproducir sonido de muerte
+        PlaySound(deathSound);
     }
 
     public void DesactivaDanio()
@@ -144,11 +180,7 @@ public class MoverPlayer : MonoBehaviour
     {
         if (collision.CompareTag("Obstacle") && !isDead)
         {
-            isDead = true;
-            PlaySound(deathSound);
-            if (gameOverCanvas != null) gameOverCanvas.SetActive(true);
-            rb.linearVelocity = Vector2.zero;
-            this.enabled = false;
+            Morir();
         }
     }
 

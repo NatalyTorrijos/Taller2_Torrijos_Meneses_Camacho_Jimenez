@@ -18,7 +18,6 @@ public class GameManager : MonoBehaviour
     public int scorePoison;
     public int playerLives;
 
-
     void Awake()
     {
         if (Instance != null && Instance != this)
@@ -30,9 +29,10 @@ public class GameManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        if (playerLives <= 0)  // ✅ Solo asigna si aún no se inicializó
+        // Inicializar vidas del jugador en 2
+        if (playerLives <= 0)
         {
-            playerLives = 3;
+            playerLives = 2;
         }
 
         SceneManager.sceneLoaded += OnSceneLoaded;
