@@ -24,11 +24,15 @@ public class MoverPlayer : MonoBehaviour
     public AudioClip fallSound;
     public AudioClip[] attackSounds;
     public AudioClip deathSound;
+    public AudioClip hurtSound;
 
     public GameObject gameOverCanvas;
     public GameObject espada;
 
     private bool isDead;
+
+    private bool isWalkingSoundPlaying;
+    private bool hasPlayedFallSound;
 
     void Start()
     {
@@ -77,18 +81,24 @@ public class MoverPlayer : MonoBehaviour
             {
                 animator.SetBool("jumping", true);
                 animator.SetBool("falling", false);
+                hasPlayedFallSound = false;
             }
             else if (rb.linearVelocity.y < -1f)
             {
                 animator.SetBool("jumping", false);
                 animator.SetBool("falling", true);
-                PlaySound(fallSound);
+                if (!hasPlayedFallSound)
+                {
+                    PlaySound(fallSound);
+                    hasPlayedFallSound = true;
+                }
             }
         }
         else
         {
             animator.SetBool("jumping", false);
             animator.SetBool("falling", false);
+            hasPlayedFallSound = false;
         }
 
         animator.SetBool("recibeDanio", recibiendoDanio);
@@ -96,53 +106,18 @@ public class MoverPlayer : MonoBehaviour
 
     public void RecibeDanio(Vector2 posicionEnemigo, int cantDanio)
     {
-        if (!recibiendoDanio && !isDead)
+        if (!recibiendoDanio)
         {
             recibiendoDanio = true;
-
-            // Restar vida al jugador
-            GameManager.Instance.AddLives(-cantDanio);
-
-            // Retroceso
             Vector2 direccion = ((Vector2)transform.position - posicionEnemigo).normalized + Vector2.up * 0.5f;
             rb.linearVelocity = Vector2.zero;
             rb.AddForce(direccion * fuerzaRebote, ForceMode2D.Impulse);
-
-            // Animación de recibir daño
             animator.SetTrigger("recibeDanio");
 
-            // Verificar si las vidas llegaron a 0
-            if (GameManager.Instance.playerLives <= 0)
-            {
-                Morir();
-            }
-            else
-            {
-                // Desactivar daño temporalmente
-                Invoke("DesactivaDanio", 0.4f);
-            }
+            PlaySound(hurtSound);
+
+            Invoke("DesactivaDanio", 0.4f);
         }
-    }
-
-    private void Morir()
-    {
-        isDead = true;
-
-        // Activar animación de muerte (Trigger)
-        animator.SetTrigger("death");
-
-        // Detener movimiento
-        rb.linearVelocity = Vector2.zero;
-
-        // Mostrar pantalla de Game Over
-        if (gameOverCanvas != null)
-            gameOverCanvas.SetActive(true);
-
-        // Desactivar control del jugador
-        this.enabled = false;
-
-        // Reproducir sonido de muerte
-        PlaySound(deathSound);
     }
 
     public void DesactivaDanio()
@@ -160,8 +135,28 @@ public class MoverPlayer : MonoBehaviour
     private void FixedUpdate()
     {
         if (isDead) return;
+
         rb.linearVelocity = new Vector2(horizontal * speed, rb.linearVelocity.y);
-        if (horizontal != 0 && isGrounded) PlaySound(walkSound);
+
+        if (horizontal != 0 && isGrounded)
+        {
+            if (!isWalkingSoundPlaying)
+            {
+                audioSource.loop = true;
+                audioSource.clip = walkSound;
+                audioSource.Play();
+                isWalkingSoundPlaying = true;
+            }
+        }
+        else
+        {
+            if (isWalkingSoundPlaying)
+            {
+                audioSource.loop = false;
+                audioSource.Stop();
+                isWalkingSoundPlaying = false;
+            }
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -180,13 +175,17 @@ public class MoverPlayer : MonoBehaviour
     {
         if (collision.CompareTag("Obstacle") && !isDead)
         {
-            Morir();
+            isDead = true;
+            PlaySound(deathSound);
+            if (gameOverCanvas != null) gameOverCanvas.SetActive(true);
+            rb.linearVelocity = Vector2.zero;
+            this.enabled = false;
         }
     }
 
     private void PlaySound(AudioClip clip)
     {
-        if (clip != null && !audioSource.isPlaying)
+        if (clip != null)
             audioSource.PlayOneShot(clip);
     }
 
