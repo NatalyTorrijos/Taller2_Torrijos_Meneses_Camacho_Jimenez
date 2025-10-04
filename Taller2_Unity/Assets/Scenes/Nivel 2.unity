@@ -8047,6 +8047,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1361193244455695578, guid: 597e944677c2a744fb8515b30ebef457, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2893188119598214034, guid: 597e944677c2a744fb8515b30ebef457, type: 3}
       propertyPath: m_Name
       value: Canvas
@@ -13948,7 +13952,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1340586409
 RectTransform:
   m_ObjectHideFlags: 0
