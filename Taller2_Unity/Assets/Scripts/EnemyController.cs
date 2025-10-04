@@ -17,10 +17,17 @@ public class EnemyController : MonoBehaviour
     private Animator animator;
     private Vector3 initialScale;
 
-    public float fuerzaRebote = 5f; 
-    public float alturaRebote = 2f; 
+    public float fuerzaRebote = 5f;
+    public float alturaRebote = 2f;
 
     private bool estaMuerto = false;
+
+    public AudioClip attackSound;
+    public AudioClip deathSound;
+    public AudioClip ambientSound;
+    private AudioSource audioSource;
+    public float intervaloAmbiente = 4f;
+    private Coroutine ambienteCoroutine;
 
     void Start()
     {
@@ -28,11 +35,17 @@ public class EnemyController : MonoBehaviour
         animator = GetComponent<Animator>();
         initialScale = transform.localScale;
         vidaActual = vida;
+        audioSource = GetComponent<AudioSource>();
 
         if (rb != null)
         {
             rb.gravityScale = 1f;
             rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+        }
+
+        if (ambientSound != null && audioSource != null)
+        {
+            ambienteCoroutine = StartCoroutine(ReproducirAmbiente());
         }
     }
 
@@ -63,7 +76,7 @@ public class EnemyController : MonoBehaviour
         }
 
         animator.SetBool("enMovimiento", enMovimiento);
-        animator.SetBool("muerto", estaMuerto); 
+        animator.SetBool("muerto", estaMuerto);
     }
 
     private void OnDrawGizmosSelected()
@@ -79,6 +92,9 @@ public class EnemyController : MonoBehaviour
             var mover = collision.gameObject.GetComponent<MoverPlayer>();
             if (mover != null)
                 mover.RecibeDanio(transform.position, 1);
+
+            if (attackSound != null && audioSource != null)
+                audioSource.PlayOneShot(attackSound);
         }
     }
 
@@ -100,7 +116,6 @@ public class EnemyController : MonoBehaviour
         recibiendoDanio = true;
         animator.SetTrigger("hit_enemy");
 
-        //----Empuje espadita
         Vector2 knockback = new Vector2(direccion.x * fuerzaRebote, alturaRebote);
         rb.linearVelocity = Vector2.zero;
         rb.AddForce(knockback, ForceMode2D.Impulse);
@@ -124,22 +139,28 @@ public class EnemyController : MonoBehaviour
     private void Morir()
     {
         estaMuerto = true;
-
-        
         animator.SetBool("muerto", true);
-
-       
         rb.linearVelocity = Vector2.zero;
-        rb.constraints = RigidbodyConstraints2D.FreezeRotation; 
-
-        
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
         Collider2D col = GetComponent<Collider2D>();
         if (col != null)
             col.isTrigger = true;
 
-        
-        this.enabled = false;
+        if (ambienteCoroutine != null)
+            StopCoroutine(ambienteCoroutine);
 
-        
+        if (deathSound != null && audioSource != null)
+            audioSource.PlayOneShot(deathSound);
+
+        this.enabled = false;
+    }
+
+    private IEnumerator ReproducirAmbiente()
+    {
+        while (!estaMuerto)
+        {
+            audioSource.PlayOneShot(ambientSound);
+            yield return new WaitForSeconds(ambientSound.length + intervaloAmbiente);
+        }
     }
 }
